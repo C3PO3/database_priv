@@ -70,6 +70,11 @@ def main():
     data = cursor.fetchall()
     print("Output of Q1: ", len(data))
 
+    listCounts = [233, 234, 556, 10, 20, 300, 700]
+    print("BEFORE: " + str(listCounts))
+    listCounts += laplace_mechanism(1, 0.632, len(listCounts))
+    roundedCounts = [round(elem) for elem in listCounts]
+    print("AFTER: " + str(roundedCounts))
 
     #Closing the connection
     conn.close()
