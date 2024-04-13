@@ -1,4 +1,18 @@
 import psycopg2
+import numpy as np
+
+# Function to get noise vector using sensetivity of 1
+def laplace_mechanism(sensitivity, epsilon, data_size):
+    b = sensitivity / epsilon
+    noise = np.random.laplace(0, b, data_size)
+    return noise
+
+def get_error(sensitivity, epsilon):
+    return 2 * (sensitivity / pow(epsilon, 2))
+
+
+
+
 '''
 Assume there is a list of queries.
 1. Connect to a postgres server
