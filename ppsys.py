@@ -3,6 +3,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import statistics
 
+'''
+Assume there is a list of queries.
+1. Connect to a postgres server
+2. For each query, run it without noise.
+3. For each query, run it with noise 10 times with the same pre-determined privacy budget.
+'''
+
 # Function to get noise vector using sensetivity of 1
 def laplace_mechanism(sensitivity, epsilon, data_size):
     b = sensitivity / epsilon
@@ -23,40 +30,71 @@ def error_plot(vecX, vecY, num):
     plt.show()
 
 
-'''
-Assume there is a list of queries.
-1. Connect to a postgres server
-2. For each query, run it without noise.
-3. For each query, run it with noise 10 times with the same pre-determined privacy budget.
-'''
+
 def getQ1():
     """
     returns string form of sql query
     for the question
     'Which company and product pairs have >200 complaints
     associated with them in the databse?'
+    
+    Returns:
+        string : sql query
     """
+    # Query 1
     q = "select * from (select company, product, count(*) ct from complaints group by company, product) where ct > 200"
     return q
 
 def getQ2():
+    """returns string form of sql query
+    for the question
+    'Which 10 subproduct have the highest number of complaints
+    associated with them in the databse?'
+
+    Returns:
+        string : sql query
+    """
     # Query 2
-    q = ""
+    q = "with X as (select subproduct, count(*) ct from complaints group by subproduct) select * from X order by ct desc limit 10"
     return q
 
 def getQ3():
+    """returns string form of sql query
+    for the question
+    'Which companies can MA 
+    customers purchase credit reporting sevices from?'
+
+    Returns:
+        string : sql query
+    """
     # Query 3
-    q = ""
+    q = "with Y as (select company, state, count(*) ct from complaints group by company, state) select X.company, X.state, Y.ct from Y, (select distinct company, state from complaints where subproduct!=' Credit reporting') X where X.company=Y.company and X.state=' MA' and Y.ct > (select avg(ct) from Y) and Y.ct < 13"
     return q
 
 def getQ4():
+    """returns string form of sql query
+    for the question
+    'Which companies can FL 
+    customers purchase credit reporting sevices from?'
+
+    Returns:
+        string : sql query
+    """
     # Query 4
-    q = ""
+    q = "with Y as (select company, state, count(*) ct from complaints group by company, state) select X.company, X.state, Y.ct from Y, (select distinct company, state from complaints where subproduct!=' Credit reporting') X where X.company=Y.company and X.state=' FL' and Y.ct > (select avg(ct) from Y) and Y.ct < 13"
     return q
 
-def getQ1():
+def getQ5():
+    """returns string form of sql query
+    for the question
+    'Which companies can TX 
+    customers purchase credit reporting sevices from?'
+
+    Returns:
+        string : sql query
+    """
     # Query 5
-    q = ""
+    q = "with Y as (select company, state, count(*) ct from complaints group by company, state) select X.company, X.state, Y.ct from Y, (select distinct company, state from complaints where subproduct!=' Credit reporting') X where X.company=Y.company and X.state=' TX' and Y.ct > (select avg(ct) from Y) and Y.ct < 13"
     return q
 
 
@@ -76,9 +114,26 @@ def main():
     data = cursor.fetchone()
     print("Connection established to: ",data)
     
-    cursor.execute("select * from (select company, product, count(*) ct from complaints group by company, product) where ct > 200")
+    print(getQ1())
+    cursor.execute(getQ1())
     data = cursor.fetchall()
     print("Output of Q1: ", len(data))
+    
+    cursor.execute(getQ2())
+    data = cursor.fetchall()
+    print("Output of Q2: ", len(data))
+    
+    cursor.execute(getQ3())
+    data = cursor.fetchall()
+    print("Output of Q3: ", len(data))
+    
+    cursor.execute(getQ4())
+    data = cursor.fetchall()
+    print("Output of Q4: ", len(data))
+    
+    cursor.execute(getQ5())
+    data = cursor.fetchall()
+    print("Output of Q5: ", len(data))
 
     # plot the error of each query given x and y vector
     vecX = []
