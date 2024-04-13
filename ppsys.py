@@ -16,9 +16,6 @@ def laplace_mechanism(sensitivity, epsilon, data_size):
     noise = np.random.laplace(0, b, data_size)
     return noise
 
-def get_error(sensitivity, epsilon):
-    return 2 * (sensitivity / pow(epsilon, 2))
-
 def error_plot(vecX, vecY, num):
     plt.figure(figsize=(8, 6))  # Adjust figure size as needed
     plt.scatter(vecX, vecY, color='b', label='Data Points')
@@ -28,7 +25,6 @@ def error_plot(vecX, vecY, num):
     plt.grid(True)
     plt.legend()
     plt.show()
-
 
 
 def getQ1():
