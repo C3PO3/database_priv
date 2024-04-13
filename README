@@ -1,21 +1,14 @@
-Here are the following SQL queries we intend to use:
 
-Q1:
-    with x as (select company, subissue, subproduct, count(*) ct
-    from complaints
-    group by company, subissue, subproduct)
-    select *
-    from x
-    where x.ct > 1000;
 
-Q2:
-    with Y as (select company, state, count(*) ct
-    from complaints
-    group by company, state)
-    select X.company, X.state, Y.ct
-    from Y, (select distinct company, state
-    from complaints
-    where subproduct != ‘ Credit reporting’) X
-    where X.company = Y.company and X.state = ‘ MA’
-    and Y.ct > (select avg(ct) from Y) and Y.ct < 13;
+# Here are the following SQL queries we intend to use:
 
+# Q1:
+#     company name, product name, number complaints associated
+                                       # add noise to number complaints here
+# Q2:
+#     
+   
+
+# Q3: 
+# Q4: 
+# Q5: 
