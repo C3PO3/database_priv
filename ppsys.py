@@ -1,4 +1,13 @@
 import psycopg2
+import numpy as np
+
+# Function to add Laplace noise
+def laplace_mechanism(count, sensitivity, epsilon):
+    beta = sensitivity / epsilon
+    noise = np.random.laplace(0, beta)
+    return count + noise
+
+
 '''
 Assume there is a list of queries.
 1. Connect to a postgres server
