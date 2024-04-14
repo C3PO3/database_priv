@@ -27,6 +27,19 @@ def error_plot(vecX, vecY, num):
     plt.legend()
     plt.show()
 
+def error_plot_given_counts(listCounts, query_num):
+    # plot the error of each query given x and y vector
+    vecY10 = []
+    vecX = []
+    vecY = 0
+    for val in range(1, 11):
+        for ep in range(1, 11):
+            listCounts += laplace_mechanism(1, ep, len(listCounts)) #0.632
+            noisyData = [round(elem) for elem in listCounts]
+            vecY += statistics.variance(noisyData)
+        vecY10.append(vecY/10)
+        vecX.append(float(val) / 10.0)
+    error_plot(vecX, vecY10, query_num)
 
 def getQ1():
     """
@@ -116,9 +129,6 @@ def run_queries(c, noise=0):
         f.write(str(runtime_lst))
         f.close()
         
-            
-        
-    
 
 def main():
     #establishing the connection
@@ -151,27 +161,17 @@ def main():
     data = cursor.fetchall()
     print("Output of Q5: ", len(data)) """
 
-    # plot the error of each query given x and y vector
-    vecY10 = []
-    vecX = []
-    vecY = 0
-    for val in range(1, 11):
-        for ep in range(1, 11):
-            listCounts = [233, 234, 556, 10, 20, 300, 700]
-            print("BEFORE: " + str(listCounts))
-            listCounts += laplace_mechanism(1, ep, len(listCounts)) #0.632
-            noisyData = [round(elem) for elem in listCounts]
-            print("AFTER: " + str(noisyData))
-            vecY += statistics.variance(noisyData)
-        vecY10.append(vecY/10)
-        vecX.append(float(val) / 10.0)
-    print(vecX)
-    print(len(vecY10))
-    error_plot(vecX, vecY10, 1)
-    # error_plot(vecX, vecY, 2)
-    # error_plot(vecX, vecY, 3)
-    # error_plot(vecX, vecY, 4)
-    # error_plot(vecX, vecY, 5)
+    Q1_counts = [12, 134, 454, 235, 142]
+    Q2_counts = [12, 134, 454, 235, 142]
+    Q3_counts = [12, 134, 454, 235, 142]
+    Q4_counts = [12, 134, 454, 235, 142]
+    Q5_counts = [12, 134, 454, 235, 142]
+
+    error_plot_given_counts(Q1_counts, 1)
+    error_plot_given_counts(Q2_counts, 2)
+    error_plot_given_counts(Q3_counts, 3)
+    error_plot_given_counts(Q4_counts, 4)
+    error_plot_given_counts(Q5_counts, 5)
 
     #Closing the connection
     conn.close()
