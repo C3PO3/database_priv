@@ -152,17 +152,22 @@ def main():
     print("Output of Q5: ", len(data)) """
 
     # plot the error of each query given x and y vector
+    vecY10 = []
     vecX = []
-    vecY = []
-    for ep in range(1, 11):
-        vecX.append(ep / 10.0)
-        listCounts = [233, 234, 556, 10, 20, 300, 700]
-        print("BEFORE: " + str(listCounts))
-        listCounts += laplace_mechanism(1, ep, len(listCounts)) #0.632
-        noisyData = [round(elem) for elem in listCounts]
-        print("AFTER: " + str(noisyData))
-        vecY.append(statistics.variance(noisyData))
-    error_plot(vecX, vecY, 1)
+    vecY = 0
+    for val in range(1, 11):
+        for ep in range(1, 11):
+            listCounts = [233, 234, 556, 10, 20, 300, 700]
+            print("BEFORE: " + str(listCounts))
+            listCounts += laplace_mechanism(1, ep, len(listCounts)) #0.632
+            noisyData = [round(elem) for elem in listCounts]
+            print("AFTER: " + str(noisyData))
+            vecY += statistics.variance(noisyData)
+        vecY10.append(vecY/10)
+        vecX.append(float(val) / 10.0)
+    print(vecX)
+    print(len(vecY10))
+    error_plot(vecX, vecY10, 1)
     # error_plot(vecX, vecY, 2)
     # error_plot(vecX, vecY, 3)
     # error_plot(vecX, vecY, 4)
