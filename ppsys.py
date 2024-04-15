@@ -52,7 +52,7 @@ def getQ1():
         string : sql query
     """
     # Query 1
-    q = "select * from (select company, product, count(*) ct from complaints group by company, product) where ct > 200"
+    q = "select * from (select company, product, count(*) ct from complaints group by company, product) where ct > 100"
     return q
 
 def getQ2():
@@ -158,18 +158,16 @@ def main():
     
     #run_queries(cursor)
     
-    """  cursor.execute(getQ1())
+    cursor.execute(getQ1())
     output = cursor.fetchall()
     f = open("Q1vec.txt", "w")
+    f2 = open("Q1output.txt", "w")
     for el in output:
         f.write(str(el[2])+"\n")
-    f.close() """
-    cursor.execute(getQ2())
-    output = cursor.fetchall()
-    f = open("Q2vec.txt", "w")
-    for el in output:
-        f.write(str(el[1])+"\n")
+        f2.write(str(el[2]), "\n")
     f.close()
+    f2.close()
+    
    
 
     #Closing the connection
