@@ -230,10 +230,6 @@ def main():
     get_runtimes(cursor, noise=0)
     get_runtimes(cursor, noise=1)
 
-   
-    
-    #getQ1Q2Error()
-
     """ 
     rawData1 = readFileGiveData("Q1vec.txt")
     epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
