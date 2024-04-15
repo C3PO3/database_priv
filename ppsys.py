@@ -27,6 +27,19 @@ def error_plot(vecX, vecY, num):
     plt.legend()
     plt.show()
 
+def error_plot_given_counts(listCounts, query_num):
+    # plot the error of each query given x and y vector
+    vecY10 = []
+    vecX = []
+    vecY = 0
+    for val in range(1, 11):
+        for ep in range(1, 11):
+            listCounts += laplace_mechanism(1, ep, len(listCounts)) #0.632
+            noisyData = [round(elem) for elem in listCounts]
+            vecY += statistics.variance(noisyData)
+        vecY10.append(vecY/10)
+        vecX.append(float(val) / 10.0)
+    error_plot(vecX, vecY10, query_num)
 
 def getQ1():
     """
@@ -95,6 +108,28 @@ def getQ5():
     return q
 
     
+def run_queries(c, noise=0):
+
+    for i in range(1, 6):
+        #create file to log runtimes
+        fname = "runtime_q"+str(i)
+        if noise==1:
+            fname+=str("noisy")
+        fname+=".txt"
+            
+        f = open(fname, "w")
+        f.write("Query number "+ str(i)+"\n")
+        q = eval("getQ"+str(i)+"()")
+        
+        runtime_lst = []
+        for j in range(10):
+            st = time.time()
+            c.execute(q)
+            et = time.time()
+            runtime_lst.append(et-st)
+        f.write(str(runtime_lst))
+        f.close()
+        
 
 def main():
     #establishing the connection
@@ -127,22 +162,17 @@ def main():
     data = cursor.fetchall()
     print("Output of Q5: ", len(data)) """
 
-    # plot the error of each query given x and y vector
-    vecX = []
-    vecY = []
-    for ep in range(1, 11):
-        vecX.append(ep / 10.0)
-        listCounts = [233, 234, 556, 10, 20, 300, 700]
-        print("BEFORE: " + str(listCounts))
-        listCounts += laplace_mechanism(1, ep, len(listCounts)) #0.632
-        noisyData = [round(elem) for elem in listCounts]
-        print("AFTER: " + str(noisyData))
-        vecY.append(statistics.variance(noisyData))
-    error_plot(vecX, vecY, 1)
-    # error_plot(vecX, vecY, 2)
-    # error_plot(vecX, vecY, 3)
-    # error_plot(vecX, vecY, 4)
-    # error_plot(vecX, vecY, 5)
+    Q1_counts = [12, 134, 454, 235, 142]
+    Q2_counts = [12, 134, 454, 235, 142]
+    Q3_counts = [12, 134, 454, 235, 142]
+    Q4_counts = [12, 134, 454, 235, 142]
+    Q5_counts = [12, 134, 454, 235, 142]
+
+    error_plot_given_counts(Q1_counts, 1)
+    error_plot_given_counts(Q2_counts, 2)
+    error_plot_given_counts(Q3_counts, 3)
+    error_plot_given_counts(Q4_counts, 4)
+    error_plot_given_counts(Q5_counts, 5)
 
     #Closing the connection
     conn.close()
