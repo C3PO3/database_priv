@@ -18,6 +18,32 @@ def laplace_mechanism(sensitivity, epsilon, data_size):
     noise = np.random.laplace(0, b, data_size)
     return noise
 
+def spread_plot(vecX, vecY, num):
+    plt.figure(figsize=(8, 6))  # Adjust figure size as needed
+    plt.scatter(vecX, vecY, color='b', label='Data Points')
+    plt.xlabel('Execution number')
+    plt.ylabel('Average count')
+    plt.title('Epsilon ' + str(num))
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+def makeSpreadPlot(rawData):
+    epsilons = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+    executions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    yAxis = []
+    avg = 0
+    for epsilon in epsilons:
+        for execution in executions:
+            noisyData = laplace_mechanism(1, epsilon, len(rawData)) + rawData
+            for num in noisyData:
+                avg += num
+            avg /= len(noisyData)
+            yAxis.append(avg)
+            avg = 0
+        spread_plot(executions, yAxis, epsilon)
+        yAxis = []
+
 def error_plot(vecX, vecY, num):
     plt.figure(figsize=(8, 6))  # Adjust figure size as needed
     plt.scatter(vecX, vecY, color='b', label='Data Points')
@@ -33,13 +59,16 @@ def error_plot_given_counts(listCounts, query_num):
     vecY10 = []
     vecX = []
     vecY = 0
-    for val in range(1, 11):
-        for ep in range(1, 11):
+    reset = listCounts
+    for ep in range(1, 11):
+        for val in range(1, 11):
             listCounts += laplace_mechanism(1, float(ep)/100.0, len(listCounts)) #0.632
             noisyData = [round(elem) for elem in listCounts]
             vecY += statistics.variance(noisyData)
+            listCounts = reset
         vecY10.append(vecY/10)
-        vecX.append(float(val) / 100.0)
+        vecX.append(float(ep) / 100.0)
+        vecY = 0
     error_plot(vecX, vecY10, query_num)
 
 def add_noise(listCounts,eps):
@@ -47,14 +76,14 @@ def add_noise(listCounts,eps):
     noisyData += laplace_mechanism(1, eps, len(listCounts)) #0.632
     noisyData = [round(elem) for elem in noisyData]
     return noisyData
-    
+
 def getQ1():
     """
     returns string form of sql query
     for the question
     'Which company and product pairs have >200 complaints
     associated with them in the databse?'
-    
+
     Returns:
         string : sql query
     """
@@ -78,7 +107,7 @@ def getQ2():
 def getQ3():
     """returns string form of sql query
     for the question
-    'Which companies can MA 
+    'Which companies can MA
     customers purchase credit reporting sevices from?'
 
     Returns:
@@ -91,7 +120,7 @@ def getQ3():
 def getQ4():
     """returns string form of sql query
     for the question
-    'Which companies can FL 
+    'Which companies can FL
     customers purchase credit reporting sevices from?'
 
     Returns:
@@ -104,7 +133,7 @@ def getQ4():
 def getQ5():
     """returns string form of sql query
     for the question
-    'Which companies can TX 
+    'Which companies can TX
     customers purchase credit reporting sevices from?'
 
     Returns:
@@ -114,7 +143,7 @@ def getQ5():
     q = "with Z as (with X as (select distinct company, state, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state) select X.company, X.state, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, count(*) ct from complaints group by company, state)Y where X.company=Y.company and X.state=Y.state) select company, state, rat from Z where rat < 0.2 and state=' TX'"
     return q
 
-    
+
 def get_runtimes(c, noise=0):
     eps_lst = [0.01, 0.02, 0.03, 0.04, 0.05]
     for i in range(1, 6):
@@ -126,16 +155,16 @@ def get_runtimes(c, noise=0):
         if noise==1:
             fname+=str("noisy")
         fname+=".txt"
-            
+
         f = open(fname, "w")
         f.write("Query number "+ str(i)+"\n")
         if noise==1:
             f.write("Each list corresponds to one epsilon value in the order following order: \n")
             f.write(str(eps_lst)+"\n")
         q = eval("getQ"+str(i)+"()")
-        
+
         runtime_lst = []
-        
+
         if noise==1:
             for eps in eps_lst:
                 for j in range(10):
@@ -147,19 +176,19 @@ def get_runtimes(c, noise=0):
                     runtime_lst.append(et-st)
                 f.write(str(runtime_lst)+"\n\n")
                 runtime_lst = []
-        
+
         else:
             for j in range(10):
                 st = time.time()
                 c.execute(q)
                 et = time.time()
                 runtime_lst.append(et-st)
-    
+
             f.write(str(runtime_lst)+"\n\n")
-            
+
         f.close()
 
-        
+
 def test_noise():
     Q1_counts = [12, 134, 454, 235, 142]
     Q2_counts = [12, 134, 454, 235, 142]
@@ -191,7 +220,7 @@ def readFileGiveData(filename):
     return data_vector
 
 def main():
-    #establishing the connection
+    # #establishing the connection
     conn = psycopg2.connect(
     database="cc151", user='postgres', password='1908', host='127.0.0.1', port= '5433'
     )
@@ -202,6 +231,11 @@ def main():
     #get_runtimes(cursor, noise=1)
     
     cursor.execute(getQ3())
+
+    get_runtimes(cursor, noise=0)
+    get_runtimes(cursor, noise=1)
+
+    """ cursor.execute(getQ2())
     output = cursor.fetchall()
     f = open("Q3vec.txt", "w")
     f2 = open("Q3out.txt", "w")
@@ -233,16 +267,27 @@ def main():
     
     #getQ1Q2Error()
 
-    """ rawData1 = readFileGiveData("Q1vec.txt")
+    """ 
+    rawData1 = readFileGiveData("Q1vec.txt")
     epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
     print(epsilon1)
     rawData2 = readFileGiveData("Q2vec.txt")
     epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
-    print(epsilon2) """
+    print(epsilon2) 
+    """
+    f2.close() """
+
+    rawData1 = readFileGiveData("Q1vec.txt")
+    # epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
+    # print(epsilon1)
+    # makeSpreadPlot(rawData1)
+    # getQ1Q2Error()
+    rawData2 = readFileGiveData("Q2vec.txt")
+    # epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
+    # print(epsilon2)
 
     #Closing the connection
     conn.close()
-    
+
 if __name__=='__main__':
     main()
-    
