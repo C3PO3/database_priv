@@ -144,6 +144,38 @@ def getQ5():
     q = "with Z as (with X as (select distinct company, state, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state) select X.company, X.state, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, count(*) ct from complaints group by company, state)Y where X.company=Y.company and X.state=Y.state) select company, state, rat from Z where rat < 0.2 and state=' TX'"
     return q
 
+def runtime_plot(vecX, vecY, num):
+    plt.figure(figsize=(8, 6))  # Adjust figure size as needed
+    plt.scatter(vecX, vecY, color='b', label='Data Points')
+    plt.xlabel('Epsilon Value')
+    plt.ylabel('Runtime')
+    plt.title('Query ' + str(num))
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+# def runtime_plot_given_counts(rawData, query_num):
+
+def read_runtime(filename):
+    with open(filename, 'r') as file:
+        # Read lines from the file
+        lines = file.readlines()
+    epsilons = ast.literal_eval(lines[2])
+
+    for val in range(0, len(lines)):
+        num = 0
+        if((val >= 3) and (val % 2 == 1)):
+            list = ast.literal_eval(lines[val])
+            for item in list:
+                num += item
+            num /= len(list)
+            print("Avg" + str(num))
+            num = 0
+
+    # Convert lines to integers and create a vector
+    data_vector = [int(line.strip()) for line in lines]
+    return data_vector
+
 
 def get_runtimes(c, noise=0):
     eps_lst = [0.01, 0.02, 0.03, 0.04, 0.05]
