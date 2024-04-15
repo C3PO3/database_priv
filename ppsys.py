@@ -48,13 +48,15 @@ def makeSpreadPlot(rawData):
 
 def error_plot(vecX, vecY, num):
     plt.figure(figsize=(8, 6))  # Adjust figure size as needed
-    plt.scatter(vecX, vecY, color='b', label='Data Points')
+    #plt.scatter(vecX, vecY, color='b', label='Data Points')
+    plt.plot(vecX, vecY, '-o')
     plt.xlabel('Epsilon Value')
     plt.ylabel('Error')
     plt.title('Query ' + str(num))
     plt.grid(True)
     plt.legend()
-    plt.show()
+    #plt.show()
+    plt.savefig("ErrorQ"+str(num)+".png")
 
 def error_plot_given_counts(listCounts, query_num):
     # plot the error of each query given x and y vector
@@ -116,7 +118,7 @@ def getQ3():
         string : sql query
     """
     # Query 3
-    q = "with Z as (with X as (select distinct company, state, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state) select X.company, X.state, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, count(*) ct from complaints group by company, state)Y where X.company=Y.company and X.state=Y.state) select company, state, rat from Z where rat < 0.2 and state=' MA'"
+    q = "with Z as (with X as (select distinct company, state, zip_code, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state, zip_code) select X.company, X.state, X.zip_code, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, zip_code, count(*) ct from complaints group by company, state, zip_code)Y where X.company=Y.company and X.state=Y.state and X.zip_code=Y.zip_code) select company, state, zip_code, rat from Z where rat < 0.2 and state=' MA'"
     return q
 
 def getQ4():
@@ -129,7 +131,7 @@ def getQ4():
         string : sql query
     """
     # Query 4
-    q = "with Z as (with X as (select distinct company, state, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state) select X.company, X.state, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, count(*) ct from complaints group by company, state)Y where X.company=Y.company and X.state=Y.state) select company, state, rat from Z where rat < 0.2 and state=' FL'"
+    q = "with Z as (with X as (select distinct company, state, zip_code, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state, zip_code) select X.company, X.state, X.zip_code, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, zip_code, count(*) ct from complaints group by company, state, zip_code)Y where X.company=Y.company and X.state=Y.state and X.zip_code=Y.zip_code) select company, state, zip_code, rat from Z where rat < 0.2 and state=' FL'"
     return q
 
 def getQ5():
@@ -142,26 +144,27 @@ def getQ5():
         string : sql query
     """
     # Query 5
-    q = "with Z as (with X as (select distinct company, state, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state) select X.company, X.state, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, count(*) ct from complaints group by company, state)Y where X.company=Y.company and X.state=Y.state) select company, state, rat from Z where rat < 0.2 and state=' TX'"
+    q = "with Z as (with X as (select distinct company, state, zip_code, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state, zip_code) select X.company, X.state, X.zip_code, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, zip_code, count(*) ct from complaints group by company, state, zip_code)Y where X.company=Y.company and X.state=Y.state and X.zip_code=Y.zip_code) select company, state, zip_code, rat from Z where rat < 0.2 and state=' TX'"
     return q
 
 def get_query_outputs(cursor, query_list=[1, 2, 3, 4, 5]):
-
+    count_idx = 2
     for qnum in query_list:
         # identify index of output where the main count will be 
-        count_idx = 2
         if qnum==2:
             count_idx = 1
+        if qnum>2:
+            count_idx = 3
         
         # run the query
-        cursor.execute(eval(eval("getQ"+str(qnum)+"()")))
+        cursor.execute(eval("getQ"+str(qnum)+"()"))
         response = cursor.fetchall()
         
         # open files to:
         # 1. store whole row
         # 2. store just the count
-        f1 = open("Q"+qnum+"out.txt", "w")
-        f2 = open("Q"+qnum+"vec.txt", "w")
+        f1 = open("Q"+str(qnum)+"out.txt", "w")
+        f2 = open("Q"+str(qnum)+"vec.txt", "w")
         
         for el in response:
             f1.write(str(el)+"\n")
@@ -172,13 +175,15 @@ def get_query_outputs(cursor, query_list=[1, 2, 3, 4, 5]):
     
 def runtime_plot(vecX, vecY, num):
     plt.figure(figsize=(8, 6))  # Adjust figure size as needed
-    plt.scatter(vecX, vecY, color='b', label='Data Points')
+    #plt.scatter(vecX, vecY, color='b', label='Data Points')
+    plt.plot(vecX, vecY, '-o')
     plt.xlabel('Epsilon Value')
     plt.ylabel('Runtime')
     plt.title('Query ' + str(num))
     plt.grid(True)
     plt.legend()
-    plt.show()
+    #plt.show()
+    plt.savefig('RuntimePlotQ'+str(num)+'.png')
 
 # def runtime_plot_given_counts(rawData, query_num):
 
@@ -203,10 +208,12 @@ def read_runtime(filename, query):
 
 def get_runtimes(c, noise=0):
     eps_lst = [0.01, 0.02, 0.03, 0.04, 0.05]
+    count_idx = 2
     for i in range(1, 6):
-        count_idx = 2
         if (i==2):
             count_idx = 1
+        if (i>2):
+            count_idx=3
         #create file to log runtimes
         fname = "runtime_q"+str(i)
         if noise==1:
@@ -315,50 +322,37 @@ def main():
     # #Creating a cursor object using the cursor() method
     cursor = conn.cursor()
     
+    # A.
     # run a given list of queries
     # runs all five queries of list of query numbers are not provided
-    get_query_outputs(cursor)
+    """ get_query_outputs(cursor) """
     
+    # B.
     # get run times with and without noise addition
     # do 10 trials for each query 
     # and for each epsilon in the case of noise addition
-    '''get_runtimes(cursor, noise=0)
-    get_runtimes(cursor, noise=1)'''
+    """ get_runtimes(cursor, noise=0)
+    get_runtimes(cursor, noise=1) """
+    # plot the runtimes
+    """ for query_num in range(1,6):
+        read_runtime("runtime_q"+str(query_num)+"noisy.txt", query_num) """
 
-    get_runtimes(cursor, noise=0)
-    get_runtimes(cursor, noise=1)
+    #Closing the connection
+    conn.close()
 
-    """ 
-    rawData1 = readFileGiveData("Q1vec.txt")
+    
+    # run to get error graphs
+    """ getQ1Q2Error()
+    getQ345Error() """
+
+    # run to look at best epsilon for Q1 and Q2
+    """ rawData1 = readFileGiveData("Q1vec.txt")
     epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
     print(epsilon1)
     rawData2 = readFileGiveData("Q2vec.txt")
     epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
-    print(epsilon2) 
-    """
+    print(epsilon2) """
 
-    # run to get runtime graphs
-    # read_runtime("runtime_q1noisy.txt", 1)
-    # read_runtime("runtime_q2noisy.txt", 2)
-    # read_runtime("runtime_q3noisy.txt", 3)
-    # read_runtime("runtime_q4noisy.txt", 4)
-    # read_runtime("runtime_q5noisy.txt", 5)
-
-
-    # run to get error graphs
-    # getQ1Q2Error()
-    # getQ345Error()
-
-    # run to look at best epsilon for Q1 and Q2
-    # rawData1 = readFileGiveData("Q1vec.txt")
-    # epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
-    # print(epsilon1)
-    # rawData2 = readFileGiveData("Q2vec.txt")
-    # epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
-    # print(epsilon2)
-
-    #Closing the connection
-    conn.close()
 
 if __name__=='__main__':
     main()
