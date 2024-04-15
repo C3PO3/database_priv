@@ -130,38 +130,12 @@ def run_queries(c, noise=0):
         f.write(str(runtime_lst))
         f.close()
         
-
-def main():
-    #establishing the connection
-    conn = psycopg2.connect(
-    database="cc151", user='postgres', password='1908', host='127.0.0.1', port= '5433'
-    )
-    #Creating a cursor object using the cursor() method
-    cursor = conn.cursor()
-    
-    run_queries(cursor)
-    
-   
-    """ cursor.execute(getQ1())
-    data = cursor.fetchall()
-    print("Output of Q1: ", len(data))
-    
-    cursor.execute(getQ2())
-    data = cursor.fetchall()
-    print("Output of Q2: ", len(data))
-    
-    cursor.execute(getQ3())
-    data = cursor.fetchall()
-    print("Output of Q3: ", len(data))
-    
-    cursor.execute(getQ4())
-    data = cursor.fetchall()
-    print("Output of Q4: ", len(data))
-    
-    cursor.execute(getQ5())
-    data = cursor.fetchall()
-    print("Output of Q5: ", len(data)) """
-
+        f = open("Q"+str(i)+"out.txt", "w")
+        for el in c.fetchall():
+            f.write(str(el)+"\n")
+        f.close()
+        
+def test_noise():
     Q1_counts = [12, 134, 454, 235, 142]
     Q2_counts = [12, 134, 454, 235, 142]
     Q3_counts = [12, 134, 454, 235, 142]
@@ -173,6 +147,21 @@ def main():
     error_plot_given_counts(Q3_counts, 3)
     error_plot_given_counts(Q4_counts, 4)
     error_plot_given_counts(Q5_counts, 5)
+
+def main():
+    #establishing the connection
+    conn = psycopg2.connect(
+    database="cc151", user='postgres', password='1908', host='127.0.0.1', port= '5433'
+    )
+    #Creating a cursor object using the cursor() method
+    cursor = conn.cursor()
+    
+    #run_queries(cursor)
+    
+    cursor.execute(getQ1())
+    v = cursor.fetchall()
+    print(type(v[2]))
+   
 
     #Closing the connection
     conn.close()
