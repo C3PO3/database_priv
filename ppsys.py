@@ -85,7 +85,7 @@ def getQ3():
         string : sql query
     """
     # Query 3
-    q = "with Y as (select company, state, count(*) ct from complaints group by company, state) select X.company, X.state, Y.ct from Y, (select distinct company, state from complaints where subproduct!=' Credit reporting') X where X.company=Y.company and X.state=' MA' and Y.ct > (select avg(ct) from Y) and Y.ct < 13"
+    q = "with Z as (with X as (select distinct company, state, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state) select X.company, X.state, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, count(*) ct from complaints group by company, state)Y where X.company=Y.company and X.state=Y.state) select company, state, rat from Z where rat < 0.2 and state=' MA'"
     return q
 
 def getQ4():
@@ -98,7 +98,7 @@ def getQ4():
         string : sql query
     """
     # Query 4
-    q = "with Y as (select company, state, count(*) ct from complaints group by company, state) select X.company, X.state, Y.ct from Y, (select distinct company, state from complaints where subproduct!=' Credit reporting') X where X.company=Y.company and X.state=' FL' and Y.ct > (select avg(ct) from Y) and Y.ct < 13"
+    q = "with Z as (with X as (select distinct company, state, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state) select X.company, X.state, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, count(*) ct from complaints group by company, state)Y where X.company=Y.company and X.state=Y.state) select company, state, rat from Z where rat < 0.2 and state=' FL'"
     return q
 
 def getQ5():
@@ -111,7 +111,7 @@ def getQ5():
         string : sql query
     """
     # Query 5
-    q = "with Y as (select company, state, count(*) ct from complaints group by company, state) select X.company, X.state, Y.ct from Y, (select distinct company, state from complaints where subproduct!=' Credit reporting') X where X.company=Y.company and X.state=' TX' and Y.ct > (select avg(ct) from Y) and Y.ct < 13"
+    q = "with Z as (with X as (select distinct company, state, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state) select X.company, X.state, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, count(*) ct from complaints group by company, state)Y where X.company=Y.company and X.state=Y.state) select company, state, rat from Z where rat < 0.2 and state=' TX'"
     return q
 
     
@@ -198,27 +198,47 @@ def main():
     #Creating a cursor object using the cursor() method
     cursor = conn.cursor()
     
-    get_runtimes(cursor, noise=0)
-    get_runtimes(cursor, noise=1)
+    #get_runtimes(cursor, noise=0)
+    #get_runtimes(cursor, noise=1)
     
-    """ cursor.execute(getQ2())
+    cursor.execute(getQ3())
     output = cursor.fetchall()
-    f = open("Q2vec.txt", "w")
-    f2 = open("Q2out.txt", "w")
+    f = open("Q3vec.txt", "w")
+    f2 = open("Q3out.txt", "w")
     for el in output:
-        f.write(str(el[1])+"\n")
+        f.write(str(el[2])+"\n")
         f2.write(str(el)+ "\n")
     f.close()
-    f2.close() """
+    f2.close()
     
-    getQ1Q2Error()
+    cursor.execute(getQ4())
+    output = cursor.fetchall()
+    f = open("Q4vec.txt", "w")
+    f2 = open("Q4out.txt", "w")
+    for el in output:
+        f.write(str(el[2])+"\n")
+        f2.write(str(el)+ "\n")
+    f.close()
+    f2.close()
+    
+    cursor.execute(getQ5())
+    output = cursor.fetchall()
+    f = open("Q5vec.txt", "w")
+    f2 = open("Q5out.txt", "w")
+    for el in output:
+        f.write(str(el[2])+"\n")
+        f2.write(str(el)+ "\n")
+    f.close()
+    f2.close()
+    
+    #getQ1Q2Error()
 
-    rawData1 = readFileGiveData("Q1vec.txt")
+    """ rawData1 = readFileGiveData("Q1vec.txt")
     epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
     print(epsilon1)
     rawData2 = readFileGiveData("Q2vec.txt")
     epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
-    print(epsilon2)
+    print(epsilon2) """
 
     #Closing the connection
     conn.close()
