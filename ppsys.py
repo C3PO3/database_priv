@@ -171,7 +171,7 @@ def main():
     cursor.execute(getQ1())
     output = cursor.fetchall()
     f = open("Q1vec.txt", "w")
-    f2 = open("Q1output.txt", "w")
+    f2 = open("Q1out.txt", "w")
     for el in output:
         f.write(str(el[2])+"\n")
         f2.write(str(el[2]), "\n")
