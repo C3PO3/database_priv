@@ -170,7 +170,7 @@ def get_runtimes(c, noise=0):
                 for j in range(10):
                     st = time.time()
                     c.execute(q)
-                    listCounts = [el[count_idx] for el in c.fetchall()]
+                    listCounts = [float(str(el[count_idx])) for el in c.fetchall()]
                     add_noise(listCounts, eps)
                     et = time.time()
                     runtime_lst.append(et-st)
@@ -227,43 +227,10 @@ def main():
     #Creating a cursor object using the cursor() method
     cursor = conn.cursor()
     
-    #get_runtimes(cursor, noise=0)
-    #get_runtimes(cursor, noise=1)
-    
-    cursor.execute(getQ3())
-
     get_runtimes(cursor, noise=0)
     get_runtimes(cursor, noise=1)
 
-    """ cursor.execute(getQ2())
-    output = cursor.fetchall()
-    f = open("Q3vec.txt", "w")
-    f2 = open("Q3out.txt", "w")
-    for el in output:
-        f.write(str(el[2])+"\n")
-        f2.write(str(el)+ "\n")
-    f.close()
-    f2.close()
-    
-    cursor.execute(getQ4())
-    output = cursor.fetchall()
-    f = open("Q4vec.txt", "w")
-    f2 = open("Q4out.txt", "w")
-    for el in output:
-        f.write(str(el[2])+"\n")
-        f2.write(str(el)+ "\n")
-    f.close()
-    f2.close()
-    
-    cursor.execute(getQ5())
-    output = cursor.fetchall()
-    f = open("Q5vec.txt", "w")
-    f2 = open("Q5out.txt", "w")
-    for el in output:
-        f.write(str(el[2])+"\n")
-        f2.write(str(el)+ "\n")
-    f.close()
-    f2.close()
+   
     
     #getQ1Q2Error()
 
@@ -275,7 +242,7 @@ def main():
     epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
     print(epsilon2) 
     """
-    f2.close() """
+
 
     rawData1 = readFileGiveData("Q1vec.txt")
     # epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
