@@ -36,6 +36,7 @@ def makeSpreadPlot(rawData):
     for epsilon in epsilons:
         for execution in executions:
             noisyData = laplace_mechanism(1, epsilon, len(rawData)) + rawData
+            noisyData = [round(elem) for elem in noisyData]
             for num in noisyData:
                 avg += num
             avg /= len(noisyData)
