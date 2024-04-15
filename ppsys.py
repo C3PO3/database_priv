@@ -94,30 +94,6 @@ def getQ5():
     q = "with Y as (select company, state, count(*) ct from complaints group by company, state) select X.company, X.state, Y.ct from Y, (select distinct company, state from complaints where subproduct!=' Credit reporting') X where X.company=Y.company and X.state=' TX' and Y.ct > (select avg(ct) from Y) and Y.ct < 13"
     return q
 
-def run_queries(c, noise=0):
-
-    for i in range(1, 6):
-        #create file to log runtimes
-        fname = "runtime_q"+str(i)
-        if noise==1:
-            fname+=str("noisy")
-        fname+=".txt"
-            
-        f = open(fname, "w")
-        f.write("Query number "+ str(i)+"\n")
-        q = eval("getQ"+str(i)+"()")
-        
-        runtime_lst = []
-        for j in range(10):
-            st = time.time()
-            c.execute(q)
-            et = time.time()
-            runtime_lst.append(et-st)
-        f.write(str(runtime_lst))
-        f.close()
-        
-            
-        
     
 
 def main():
