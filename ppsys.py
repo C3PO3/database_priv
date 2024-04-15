@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import statistics
 import time
 import math
+import ast
 
 '''
 Assume there is a list of queries.
@@ -36,6 +37,7 @@ def makeSpreadPlot(rawData):
     for epsilon in epsilons:
         for execution in executions:
             noisyData = laplace_mechanism(1, epsilon, len(rawData)) + rawData
+            noisyData = [round(elem) for elem in noisyData]
             for num in noisyData:
                 avg += num
             avg /= len(noisyData)
@@ -168,6 +170,36 @@ def get_query_outputs(cursor, query_list=[1, 2, 3, 4, 5]):
         f1.close()
         f2.close()
     
+def runtime_plot(vecX, vecY, num):
+    plt.figure(figsize=(8, 6))  # Adjust figure size as needed
+    plt.scatter(vecX, vecY, color='b', label='Data Points')
+    plt.xlabel('Epsilon Value')
+    plt.ylabel('Runtime')
+    plt.title('Query ' + str(num))
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+# def runtime_plot_given_counts(rawData, query_num):
+
+def read_runtime(filename, query):
+    with open(filename, 'r') as file:
+        # Read lines from the file
+        lines = file.readlines()
+    epsilons = ast.literal_eval(lines[2])
+    averageTimes = []
+
+    for val in range(0, len(lines)):
+        num = 0
+        if((val >= 3) and (val % 2 == 1)):
+            list = ast.literal_eval(lines[val])
+            for item in list:
+                num += item
+            num /= len(list)
+            averageTimes.append(num)
+            num = 0
+    runtime_plot(epsilons, averageTimes, query)
+
 
 def get_runtimes(c, noise=0):
     eps_lst = [0.01, 0.02, 0.03, 0.04, 0.05]
@@ -245,11 +277,10 @@ def readFileGiveData(filename):
     return data_vector
 
 def main():
-    # #establishing the connection
+    #establishing the connection
     conn = psycopg2.connect(
-    database="cc151", user='postgres', password='1908', host='127.0.0.1', port= '5433'
-    )
-    #Creating a cursor object using the cursor() method
+    database="cc151", user='postgres', password='1908', host='127.0.0.1', port= '5433')
+    # #Creating a cursor object using the cursor() method
     cursor = conn.cursor()
     
     # run a given list of queries
@@ -265,15 +296,23 @@ def main():
    
     
     getQ1Q2Error()
+    # get_runtimes(cursor, noise=0)
+    # get_runtimes(cursor, noise=1)
 
-    """ 
-    rawData1 = readFileGiveData("Q1vec.txt")
-    epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
-    print(epsilon1)
-    rawData2 = readFileGiveData("Q2vec.txt")
-    epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
-    print(epsilon2) 
-    """
+    # """ 
+    # rawData1 = readFileGiveData("Q1vec.txt")
+    # epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
+    # print(epsilon1)
+    # rawData2 = readFileGiveData("Q2vec.txt")
+    # epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
+    # print(epsilon2) 
+    # """
+
+    read_runtime("runtime_q1noisy.txt", 1)
+    read_runtime("runtime_q2noisy.txt", 2)
+    read_runtime("runtime_q3noisy.txt", 3)
+    read_runtime("runtime_q4noisy.txt", 4)
+    read_runtime("runtime_q5noisy.txt", 5)
 
 
     rawData1 = readFileGiveData("Q1vec.txt")
@@ -286,7 +325,7 @@ def main():
     # print(epsilon2)
 
     #Closing the connection
-    conn.close()
+    # conn.close()
 
 if __name__=='__main__':
     main()
