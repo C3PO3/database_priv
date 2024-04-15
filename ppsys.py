@@ -270,7 +270,12 @@ def main():
     # epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
     # print(epsilon2) 
     # """
+
     read_runtime("runtime_q1noisy.txt", 1)
+    read_runtime("runtime_q2noisy.txt", 2)
+    read_runtime("runtime_q3noisy.txt", 3)
+    read_runtime("runtime_q4noisy.txt", 4)
+    read_runtime("runtime_q5noisy.txt", 5)
 
 
     rawData1 = readFileGiveData("Q1vec.txt")
