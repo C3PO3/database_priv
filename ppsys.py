@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import statistics
 import time
 import math
+import ast
 
 '''
 Assume there is a list of queries.
@@ -156,11 +157,12 @@ def runtime_plot(vecX, vecY, num):
 
 # def runtime_plot_given_counts(rawData, query_num):
 
-def read_runtime(filename):
+def read_runtime(filename, query):
     with open(filename, 'r') as file:
         # Read lines from the file
         lines = file.readlines()
     epsilons = ast.literal_eval(lines[2])
+    averageTimes = []
 
     for val in range(0, len(lines)):
         num = 0
@@ -169,12 +171,9 @@ def read_runtime(filename):
             for item in list:
                 num += item
             num /= len(list)
-            print("Avg" + str(num))
+            averageTimes.append(num)
             num = 0
-
-    # Convert lines to integers and create a vector
-    data_vector = [int(line.strip()) for line in lines]
-    return data_vector
+    runtime_plot(epsilons, averageTimes, query)
 
 
 def get_runtimes(c, noise=0):
@@ -253,24 +252,25 @@ def readFileGiveData(filename):
     return data_vector
 
 def main():
-    # #establishing the connection
-    conn = psycopg2.connect(
-    database="cc151", user='postgres', password='1908', host='127.0.0.1', port= '5433'
-    )
-    #Creating a cursor object using the cursor() method
-    cursor = conn.cursor()
+    #establishing the connection
+    # conn = psycopg2.connect(
+    # database="cc151", user='postgres', password='1908', host='127.0.0.1', port= '5433'
+    # )
+    # #Creating a cursor object using the cursor() method
+    # cursor = conn.cursor()
     
-    get_runtimes(cursor, noise=0)
-    get_runtimes(cursor, noise=1)
+    # get_runtimes(cursor, noise=0)
+    # get_runtimes(cursor, noise=1)
 
-    """ 
-    rawData1 = readFileGiveData("Q1vec.txt")
-    epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
-    print(epsilon1)
-    rawData2 = readFileGiveData("Q2vec.txt")
-    epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
-    print(epsilon2) 
-    """
+    # """ 
+    # rawData1 = readFileGiveData("Q1vec.txt")
+    # epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
+    # print(epsilon1)
+    # rawData2 = readFileGiveData("Q2vec.txt")
+    # epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
+    # print(epsilon2) 
+    # """
+    read_runtime("runtime_q1noisy.txt", 1)
 
 
     rawData1 = readFileGiveData("Q1vec.txt")
@@ -283,7 +283,7 @@ def main():
     # print(epsilon2)
 
     #Closing the connection
-    conn.close()
+    # conn.close()
 
 if __name__=='__main__':
     main()
