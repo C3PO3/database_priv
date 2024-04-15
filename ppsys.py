@@ -148,6 +148,16 @@ def test_noise():
     error_plot_given_counts(Q4_counts, 4)
     error_plot_given_counts(Q5_counts, 5)
 
+
+def readFileGiveData(filename):
+    with open(filename, 'r') as file:
+        # Read lines from the file
+        lines = file.readlines()
+
+    # Convert lines to integers and create a vector
+    data_vector = [int(line.strip()) for line in lines]
+    return data_vector
+
 def main():
     #establishing the connection
     conn = psycopg2.connect(
