@@ -158,9 +158,18 @@ def main():
     
     #run_queries(cursor)
     
-    cursor.execute(getQ1())
-    v = cursor.fetchall()
-    print(type(v[2]))
+    """  cursor.execute(getQ1())
+    output = cursor.fetchall()
+    f = open("Q1vec.txt", "w")
+    for el in output:
+        f.write(str(el[2])+"\n")
+    f.close() """
+    cursor.execute(getQ2())
+    output = cursor.fetchall()
+    f = open("Q2vec.txt", "w")
+    for el in output:
+        f.write(str(el[1])+"\n")
+    f.close()
    
 
     #Closing the connection
