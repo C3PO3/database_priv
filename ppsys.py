@@ -174,7 +174,7 @@ def main():
     f2 = open("Q1out.txt", "w")
     for el in output:
         f.write(str(el[2])+"\n")
-        f2.write(str(el[2]), "\n")
+        f2.write(str(el[2])+ "\n")
     f.close()
     f2.close()
     

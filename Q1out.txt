@@ -1,46 +1,85 @@
-(' I.C. System Inc.', ' Debt collection', 574)
-(' UNITED SERVICES AUTOMOBILE ASSOCIATION', ' Credit card or prepaid card', 643)
-(' U.S. BANCORP', ' Credit card or prepaid card', 664)
-(' CITIBANK N.A.', ' Debt collection', 540)
-(' ALLY FINANCIAL INC.', ' Vehicle loan or lease', 429)
-(' SYNCHRONY FINANCIAL', ' Credit reporting credit repair services or other personal consumer reports', 683)
-(' BANK OF AMERICA NATIONAL ASSOCIATION', ' Debt collection', 321)
-(' ALLY FINANCIAL INC.', ' Checking or savings account', 210)
-(' WELLS FARGO & COMPANY', ' Credit card or prepaid card', 684)
-(' HYUNDAI CAPITAL AMERICA', ' Vehicle loan or lease', 283)
-(' SYNCHRONY FINANCIAL', ' Debt collection', 665)
-(' Netspend Corporation', ' Credit card or prepaid card', 209)
-(' TRANSUNION INTERMEDIATE HOLDINGS INC.', ' Credit reporting or other personal consumer reports', 1178)
-(' ALLY FINANCIAL INC.', ' Credit reporting credit repair services or other personal consumer reports', 258)
-(' TRUIST FINANCIAL CORPORATION', ' Checking or savings account', 510)
-(' WELLS FARGO & COMPANY', ' Credit reporting credit repair services or other personal consumer reports', 552)
-(' NAVY FEDERAL CREDIT UNION', ' Checking or savings account', 855)
-(' Fidelity National Information Services Inc. (FNIS)', ' Credit reporting credit repair services or other personal consumer reports', 213)
-(' SYNCHRONY FINANCIAL', ' Credit card or prepaid card', 2149)
-(' CITIBANK N.A.', ' Credit card or prepaid card', 2866)
-(' CCS Financial Services Inc.', ' Debt collection', 379)
-(' Experian Information Solutions Inc.', ' Credit reporting credit repair services or other personal consumer reports', 18671)
-(' WELLS FARGO & COMPANY', ' Checking or savings account', 2051)
-(' TRANSUNION INTERMEDIATE HOLDINGS INC.', ' Credit reporting credit repair services or other personal consumer reports', 17343)
-(' UNITED SERVICES AUTOMOBILE ASSOCIATION', ' Checking or savings account', 1275)
-(' BANK OF AMERICA NATIONAL ASSOCIATION', ' Credit reporting credit repair services or other personal consumer reports', 503)
-(' UNITED SERVICES AUTOMOBILE ASSOCIATION', ' Debt collection', 244)
-(' Experian Information Solutions Inc.', ' Credit reporting or other personal consumer reports', 1015)
-(' CITIBANK N.A.', ' Credit reporting credit repair services or other personal consumer reports', 610)
-(' BANK OF AMERICA NATIONAL ASSOCIATION', ' Checking or savings account', 1866)
-(' Convergent Resources Inc.', ' Debt collection', 477)
-(' NAVY FEDERAL CREDIT UNION', ' Credit reporting credit repair services or other personal consumer reports', 357)
-(' Experian Information Solutions Inc.', ' Debt collection', 270)
-(' BANK OF AMERICA NATIONAL ASSOCIATION', ' Credit card or prepaid card', 1457)
-(' ERC', ' Debt collection', 407)
-(' NAVY FEDERAL CREDIT UNION', ' Credit card or prepaid card', 321)
-(' MOHELA', ' Student loan', 282)
-(' WELLS FARGO & COMPANY', ' Debt collection', 280)
-(' U.S. BANCORP', ' Checking or savings account', 537)
-(' NAVY FEDERAL CREDIT UNION', ' Debt collection', 272)
-(' CITIBANK N.A.', ' Checking or savings account', 797)
-(' CITIBANK N.A.', ' Credit card', 219)
-(' BARCLAYS BANK DELAWARE', ' Credit card or prepaid card', 936)
-(' TRANSUNION INTERMEDIATE HOLDINGS INC.', ' Debt collection', 255)
-(' WELLS FARGO & COMPANY', ' Vehicle loan or lease', 351)
-(' UNITED SERVICES AUTOMOBILE ASSOCIATION', ' Credit reporting credit repair services or other personal consumer reports', 390)
+574
+101
+150
+108
+643
+196
+664
+102
+540
+106
+429
+104
+683
+321
+177
+210
+169
+105
+186
+684
+283
+160
+665
+209
+117
+1178
+189
+108
+188
+146
+158
+106
+258
+510
+552
+855
+213
+2149
+2866
+161
+128
+102
+379
+18671
+2051
+17343
+1275
+503
+244
+1015
+135
+610
+1866
+477
+121
+103
+114
+162
+169
+357
+131
+270
+1457
+407
+321
+282
+280
+126
+132
+154
+151
+130
+537
+122
+272
+797
+219
+936
+101
+118
+255
+104
+110
+351
+390
