@@ -34,7 +34,7 @@ def error_plot_given_counts(listCounts, query_num):
     vecY = 0
     for val in range(1, 11):
         for ep in range(1, 11):
-            listCounts += laplace_mechanism(1, ep, len(listCounts)) #0.632
+            listCounts += laplace_mechanism(1, float(ep)/10.0, len(listCounts)) #0.632
             noisyData = [round(elem) for elem in listCounts]
             vecY += statistics.variance(noisyData)
         vecY10.append(vecY/10)
@@ -186,7 +186,7 @@ def main():
     f.close()
     f2.close()
     
-   
+    getQ1Q2Error()
 
     #Closing the connection
     conn.close()
