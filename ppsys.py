@@ -143,6 +143,31 @@ def getQ5():
     q = "with Z as (with X as (select distinct company, state, count(*) ct from complaints where subproduct=' Credit reporting' group by company, state) select X.company, X.state, cast(X.ct as decimal)/cast(Y.ct as decimal) rat from X, (select distinct company, state, count(*) ct from complaints group by company, state)Y where X.company=Y.company and X.state=Y.state) select company, state, rat from Z where rat < 0.2 and state=' TX'"
     return q
 
+def get_query_outputs(cursor, query_list=[1, 2, 3, 4, 5]):
+
+    for qnum in query_list:
+        # identify index of output where the main count will be 
+        count_idx = 2
+        if qnum==2:
+            count_idx = 1
+        
+        # run the query
+        cursor.execute(eval(eval("getQ"+str(qnum)+"()")))
+        response = cursor.fetchall()
+        
+        # open files to:
+        # 1. store whole row
+        # 2. store just the count
+        f1 = open("Q"+qnum+"out.txt", "w")
+        f2 = open("Q"+qnum+"vec.txt", "w")
+        
+        for el in response:
+            f1.write(str(el)+"\n")
+            f2.write(str(el[count_idx])+"\n")
+        
+        f1.close()
+        f2.close()
+    
 
 def get_runtimes(c, noise=0):
     eps_lst = [0.01, 0.02, 0.03, 0.04, 0.05]
@@ -227,12 +252,19 @@ def main():
     #Creating a cursor object using the cursor() method
     cursor = conn.cursor()
     
-    get_runtimes(cursor, noise=0)
-    get_runtimes(cursor, noise=1)
+    # run a given list of queries
+    # runs all five queries of list of query numbers are not provided
+    get_query_outputs(cursor)
+    
+    # get run times with and without noise addition
+    # do 10 trials for each query 
+    # and for each epsilon in the case of noise addition
+    '''get_runtimes(cursor, noise=0)
+    get_runtimes(cursor, noise=1)'''
 
    
     
-    #getQ1Q2Error()
+    getQ1Q2Error()
 
     """ 
     rawData1 = readFileGiveData("Q1vec.txt")
