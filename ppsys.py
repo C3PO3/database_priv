@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import statistics
 import time
+import math
 
 '''
 Assume there is a list of queries.
@@ -34,11 +35,11 @@ def error_plot_given_counts(listCounts, query_num):
     vecY = 0
     for val in range(1, 11):
         for ep in range(1, 11):
-            listCounts += laplace_mechanism(1, ep, len(listCounts)) #0.632
+            listCounts += laplace_mechanism(1, float(ep)/100.0, len(listCounts)) #0.632
             noisyData = [round(elem) for elem in listCounts]
             vecY += statistics.variance(noisyData)
         vecY10.append(vecY/10)
-        vecX.append(float(val) / 10.0)
+        vecX.append(float(val) / 100.0)
     error_plot(vecX, vecY10, query_num)
 
 def add_noise(listCounts,eps):
@@ -172,6 +173,13 @@ def test_noise():
     error_plot_given_counts(Q4_counts, 4)
     error_plot_given_counts(Q5_counts, 5)
 
+def getQ1Q2Error():
+    # make Q1 error graph
+
+    rawData1 = readFileGiveData("Q1vec.txt")
+    error_plot_given_counts(rawData1, 1)
+    rawData2 = readFileGiveData("Q2vec.txt")
+    error_plot_given_counts(rawData2, 2)
 
 def readFileGiveData(filename):
     with open(filename, 'r') as file:
@@ -203,7 +211,14 @@ def main():
     f.close()
     f2.close() """
     
-   
+    getQ1Q2Error()
+
+    rawData1 = readFileGiveData("Q1vec.txt")
+    epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
+    print(epsilon1)
+    rawData2 = readFileGiveData("Q2vec.txt")
+    epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
+    print(epsilon2)
 
     #Closing the connection
     conn.close()
