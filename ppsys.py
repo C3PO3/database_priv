@@ -238,7 +238,7 @@ def main():
         f.write(str(el[1])+"\n")
         f2.write(str(el)+ "\n")
     f.close()
-    f2.close()
+    f2.close() """
 
     rawData1 = readFileGiveData("Q1vec.txt")
     # epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
