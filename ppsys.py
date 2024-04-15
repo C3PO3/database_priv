@@ -32,7 +32,7 @@ def makeSpreadPlot(rawData):
     epsilons = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
     executions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     yAxis = []
-    avg = 0 
+    avg = 0
     for epsilon in epsilons:
         for execution in executions:
             noisyData = laplace_mechanism(1, epsilon, len(rawData)) + rawData
@@ -71,13 +71,19 @@ def error_plot_given_counts(listCounts, query_num):
         vecY = 0
     error_plot(vecX, vecY10, query_num)
 
+def add_noise(listCounts,eps):
+    noisyData = listCounts.copy()
+    noisyData += laplace_mechanism(1, eps, len(listCounts)) #0.632
+    noisyData = [round(elem) for elem in noisyData]
+    return noisyData
+
 def getQ1():
     """
     returns string form of sql query
     for the question
     'Which company and product pairs have >200 complaints
     associated with them in the databse?'
-    
+
     Returns:
         string : sql query
     """
@@ -95,13 +101,13 @@ def getQ2():
         string : sql query
     """
     # Query 2
-    q = "with X as (select subproduct, count(*) ct from complaints group by subproduct) select * from X order by ct desc limit 10"
+    q = "with X as (select subproduct, count(*) ct from complaints group by subproduct) select * from X order by ct desc"
     return q
 
 def getQ3():
     """returns string form of sql query
     for the question
-    'Which companies can MA 
+    'Which companies can MA
     customers purchase credit reporting sevices from?'
 
     Returns:
@@ -114,7 +120,7 @@ def getQ3():
 def getQ4():
     """returns string form of sql query
     for the question
-    'Which companies can FL 
+    'Which companies can FL
     customers purchase credit reporting sevices from?'
 
     Returns:
@@ -127,7 +133,7 @@ def getQ4():
 def getQ5():
     """returns string form of sql query
     for the question
-    'Which companies can TX 
+    'Which companies can TX
     customers purchase credit reporting sevices from?'
 
     Returns:
@@ -137,34 +143,52 @@ def getQ5():
     q = "with Y as (select company, state, count(*) ct from complaints group by company, state) select X.company, X.state, Y.ct from Y, (select distinct company, state from complaints where subproduct!=' Credit reporting') X where X.company=Y.company and X.state=' TX' and Y.ct > (select avg(ct) from Y) and Y.ct < 13"
     return q
 
-    
-def run_queries(c, noise=0):
 
+def get_runtimes(c, noise=0):
+    eps_lst = [0.01, 0.02, 0.03, 0.04, 0.05]
     for i in range(1, 6):
+        count_idx = 2
+        if (i==2):
+            count_idx = 1
         #create file to log runtimes
         fname = "runtime_q"+str(i)
         if noise==1:
             fname+=str("noisy")
         fname+=".txt"
-            
+
         f = open(fname, "w")
         f.write("Query number "+ str(i)+"\n")
+        if noise==1:
+            f.write("Each list corresponds to one epsilon value in the order following order: \n")
+            f.write(str(eps_lst)+"\n")
         q = eval("getQ"+str(i)+"()")
-        
+
         runtime_lst = []
-        for j in range(10):
-            st = time.time()
-            c.execute(q)
-            et = time.time()
-            runtime_lst.append(et-st)
-        f.write(str(runtime_lst))
+
+        if noise==1:
+            for eps in eps_lst:
+                for j in range(10):
+                    st = time.time()
+                    c.execute(q)
+                    listCounts = [el[count_idx] for el in c.fetchall()]
+                    add_noise(listCounts, eps)
+                    et = time.time()
+                    runtime_lst.append(et-st)
+                f.write(str(runtime_lst)+"\n\n")
+                runtime_lst = []
+
+        else:
+            for j in range(10):
+                st = time.time()
+                c.execute(q)
+                et = time.time()
+                runtime_lst.append(et-st)
+
+            f.write(str(runtime_lst)+"\n\n")
+
         f.close()
-        
-        f = open("Q"+str(i)+"out.txt", "w")
-        for el in c.fetchall():
-            f.write(str(el)+"\n")
-        f.close()
-        
+
+
 def test_noise():
     Q1_counts = [12, 134, 454, 235, 142]
     Q2_counts = [12, 134, 454, 235, 142]
@@ -202,16 +226,17 @@ def main():
     )
     #Creating a cursor object using the cursor() method
     cursor = conn.cursor()
-    
-    #run_queries(cursor)
-    
-    cursor.execute(getQ1())
+
+    get_runtimes(cursor, noise=0)
+    get_runtimes(cursor, noise=1)
+
+    """ cursor.execute(getQ2())
     output = cursor.fetchall()
-    f = open("Q1vec.txt", "w")
-    f2 = open("Q1out.txt", "w")
+    f = open("Q2vec.txt", "w")
+    f2 = open("Q2out.txt", "w")
     for el in output:
-        f.write(str(el[2])+"\n")
-        f2.write(str(el[2])+ "\n")
+        f.write(str(el[1])+"\n")
+        f2.write(str(el)+ "\n")
     f.close()
     f2.close()
 
@@ -226,7 +251,6 @@ def main():
 
     #Closing the connection
     conn.close()
-    
+
 if __name__=='__main__':
     main()
-    

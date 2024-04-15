@@ -1,85 +1,85 @@
-574
-101
-150
-108
-643
-196
-664
-102
-540
-106
-429
-104
-683
-321
-177
-210
-169
-105
-186
-684
-283
-160
-665
-209
-117
-1178
-189
-108
-188
-146
-158
-106
-258
-510
-552
-855
-213
-2149
-2866
-161
-128
-102
-379
-18671
-2051
-17343
-1275
-503
-244
-1015
-135
-610
-1866
-477
-121
-103
-114
-162
-169
-357
-131
-270
-1457
-407
-321
-282
-280
-126
-132
-154
-151
-130
-537
-122
-272
-797
-219
-936
-101
-118
-255
-104
-110
-351
-390
+(' I.C. System Inc.', ' Debt collection', 574)
+(' ALLY FINANCIAL INC.', ' Debt collection', 101)
+(' CORELOGIC INC', ' Credit reporting credit repair services or other personal consumer reports', 150)
+(' MRS BPO LLC', ' Debt collection', 108)
+(' UNITED SERVICES AUTOMOBILE ASSOCIATION', ' Credit card or prepaid card', 643)
+(' BARCLAYS BANK DELAWARE', ' Credit reporting credit repair services or other personal consumer reports', 196)
+(' U.S. BANCORP', ' Credit card or prepaid card', 664)
+(' BMO HARRIS BANK NATIONAL ASSOCIATION', ' Checking or savings account', 102)
+(' CITIBANK N.A.', ' Debt collection', 540)
+(' U.S. BANCORP', ' Debt collection', 106)
+(' ALLY FINANCIAL INC.', ' Vehicle loan or lease', 429)
+(' I.Q. DATA INTERNATIONAL INC.', ' Debt collection', 104)
+(' SYNCHRONY FINANCIAL', ' Credit reporting credit repair services or other personal consumer reports', 683)
+(' BANK OF AMERICA NATIONAL ASSOCIATION', ' Debt collection', 321)
+(' HW Holding Inc', ' Debt collection', 177)
+(' ALLY FINANCIAL INC.', ' Checking or savings account', 210)
+(' Army and Air Force Exchange Service', ' Debt collection', 169)
+(' Medical Data Systems Inc.', ' Debt collection', 105)
+(' REGIONS FINANCIAL CORPORATION', ' Checking or savings account', 186)
+(' WELLS FARGO & COMPANY', ' Credit card or prepaid card', 684)
+(' HYUNDAI CAPITAL AMERICA', ' Vehicle loan or lease', 283)
+(' ProCollect Inc.', ' Debt collection', 160)
+(' SYNCHRONY FINANCIAL', ' Debt collection', 665)
+(' Netspend Corporation', ' Credit card or prepaid card', 209)
+(' TRUIST FINANCIAL CORPORATION', ' Credit reporting credit repair services or other personal consumer reports', 117)
+(' TRANSUNION INTERMEDIATE HOLDINGS INC.', ' Credit reporting or other personal consumer reports', 1178)
+(' U.S. BANCORP', ' Credit reporting credit repair services or other personal consumer reports', 189)
+(' Sequium Asset Solutions LLC', ' Debt collection', 108)
+(' CREDIT ACCEPTANCE CORPORATION', ' Vehicle loan or lease', 188)
+(' UNITED SERVICES AUTOMOBILE ASSOCIATION', ' Vehicle loan or lease', 146)
+(' Radius Global Solutions LLC', ' Debt collection', 158)
+(' WELLS FARGO & COMPANY', ' Mortgage', 106)
+(' ALLY FINANCIAL INC.', ' Credit reporting credit repair services or other personal consumer reports', 258)
+(' TRUIST FINANCIAL CORPORATION', ' Checking or savings account', 510)
+(' WELLS FARGO & COMPANY', ' Credit reporting credit repair services or other personal consumer reports', 552)
+(' NAVY FEDERAL CREDIT UNION', ' Checking or savings account', 855)
+(' Fidelity National Information Services Inc. (FNIS)', ' Credit reporting credit repair services or other personal consumer reports', 213)
+(' SYNCHRONY FINANCIAL', ' Credit card or prepaid card', 2149)
+(' CITIBANK N.A.', ' Credit card or prepaid card', 2866)
+(' SYNCHRONY FINANCIAL', ' Credit card', 161)
+(' Army and Air Force Exchange Service', ' Credit reporting credit repair services or other personal consumer reports', 128)
+(' SUNTRUST BANKS INC.', ' Checking or savings account', 102)
+(' CCS Financial Services Inc.', ' Debt collection', 379)
+(' Experian Information Solutions Inc.', ' Credit reporting credit repair services or other personal consumer reports', 18671)
+(' WELLS FARGO & COMPANY', ' Checking or savings account', 2051)
+(' TRANSUNION INTERMEDIATE HOLDINGS INC.', ' Credit reporting credit repair services or other personal consumer reports', 17343)
+(' UNITED SERVICES AUTOMOBILE ASSOCIATION', ' Checking or savings account', 1275)
+(' BANK OF AMERICA NATIONAL ASSOCIATION', ' Credit reporting credit repair services or other personal consumer reports', 503)
+(' UNITED SERVICES AUTOMOBILE ASSOCIATION', ' Debt collection', 244)
+(' Experian Information Solutions Inc.', ' Credit reporting or other personal consumer reports', 1015)
+(' Freedom Mortgage Company', ' Mortgage', 135)
+(' CITIBANK N.A.', ' Credit reporting credit repair services or other personal consumer reports', 610)
+(' BANK OF AMERICA NATIONAL ASSOCIATION', ' Checking or savings account', 1866)
+(' Convergent Resources Inc.', ' Debt collection', 477)
+(' CREDIT ACCEPTANCE CORPORATION', ' Credit reporting credit repair services or other personal consumer reports', 121)
+(' Penn Credit Corporation', ' Debt collection', 103)
+(' Atlanticus Services Corporation', ' Credit card or prepaid card', 114)
+(' Receivables Performance Management LLC', ' Debt collection', 162)
+(' Amsher Collection Services Inc.', ' Debt collection', 169)
+(' NAVY FEDERAL CREDIT UNION', ' Credit reporting credit repair services or other personal consumer reports', 357)
+(' SLM CORPORATION', ' Student loan', 131)
+(' Experian Information Solutions Inc.', ' Debt collection', 270)
+(' BANK OF AMERICA NATIONAL ASSOCIATION', ' Credit card or prepaid card', 1457)
+(' ERC', ' Debt collection', 407)
+(' NAVY FEDERAL CREDIT UNION', ' Credit card or prepaid card', 321)
+(' MOHELA', ' Student loan', 282)
+(' WELLS FARGO & COMPANY', ' Debt collection', 280)
+(' HCFS Health Care Financial Services Inc.', ' Debt collection', 126)
+(' FAIR COLLECTIONS & OUTSOURCING INC.', ' Debt collection', 132)
+(' SUNRISE CREDIT SERVICES INC', ' Debt collection', 154)
+(' The CMI Group Inc.', ' Debt collection', 151)
+(' NAVY FEDERAL CREDIT UNION', ' Vehicle loan or lease', 130)
+(' U.S. BANCORP', ' Checking or savings account', 537)
+(' FIRST NATIONAL BANK OF OMAHA', ' Credit card or prepaid card', 122)
+(' NAVY FEDERAL CREDIT UNION', ' Debt collection', 272)
+(' CITIBANK N.A.', ' Checking or savings account', 797)
+(' CITIBANK N.A.', ' Credit card', 219)
+(' BARCLAYS BANK DELAWARE', ' Credit card or prepaid card', 936)
+(' SYNCHRONY FINANCIAL', ' Checking or savings account', 101)
+(' Shellpoint Partners LLC', ' Credit reporting credit repair services or other personal consumer reports', 118)
+(' TRANSUNION INTERMEDIATE HOLDINGS INC.', ' Debt collection', 255)
+(' Army and Air Force Exchange Service', ' Credit card or prepaid card', 104)
+(' Shellpoint Partners LLC', ' Mortgage', 110)
+(' WELLS FARGO & COMPANY', ' Vehicle loan or lease', 351)
+(' UNITED SERVICES AUTOMOBILE ASSOCIATION', ' Credit reporting credit repair services or other personal consumer reports', 390)
