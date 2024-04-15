@@ -148,6 +148,14 @@ def test_noise():
     error_plot_given_counts(Q4_counts, 4)
     error_plot_given_counts(Q5_counts, 5)
 
+def getQ1Q2Error():
+    # make Q1 error graph
+
+    rawData1 = readFileGiveData("Q1vec.txt")
+    error_plot_given_counts(rawData1, 1)
+    rawData2 = readFileGiveData("Q2vec.txt")
+    error_plot_given_counts(rawData2, 2)
+
 
 def readFileGiveData(filename):
     with open(filename, 'r') as file:
