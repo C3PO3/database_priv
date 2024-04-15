@@ -267,13 +267,45 @@ def getQ1Q2Error():
     rawData2 = readFileGiveData("Q2vec.txt")
     error_plot_given_counts(rawData2, 2)
 
+def error_plot_given_counts_345(listCounts, query_num):
+    # plot the error of each query given x and y vector
+    vecY10 = []
+    vecX = []
+    vecY = 0
+    reset = listCounts
+    noisyData = []
+    for ep in range(1, 11):
+        for val in range(1, 11):
+            listCounts += laplace_mechanism(1, float(ep)/100.0, len(listCounts)) #0.632
+            for elem in listCounts:
+                if(elem > 1):
+                    elem = 1
+                elif(elem < 0):
+                    elem = 0
+                noisyData.append(elem)
+            vecY += statistics.variance(noisyData)
+            listCounts = reset
+            noisyData = []
+        vecY10.append(vecY/10)
+        vecX.append(float(ep) / 100.0)
+        vecY = 0
+    error_plot(vecX, vecY10, query_num)
+
+def getQ345Error():
+    rawData3 = readFileGiveData("Q3vec.txt")
+    error_plot_given_counts_345(rawData3, 3)
+    rawData4 = readFileGiveData("Q4vec.txt")
+    error_plot_given_counts_345(rawData4, 4)
+    rawData5 = readFileGiveData("Q5vec.txt")
+    error_plot_given_counts_345(rawData5, 5)
+
 def readFileGiveData(filename):
     with open(filename, 'r') as file:
         # Read lines from the file
         lines = file.readlines()
 
     # Convert lines to integers and create a vector
-    data_vector = [int(line.strip()) for line in lines]
+    data_vector = [float(line.strip()) for line in lines]
     return data_vector
 
 def main():
@@ -293,39 +325,40 @@ def main():
     '''get_runtimes(cursor, noise=0)
     get_runtimes(cursor, noise=1)'''
 
-   
-    
-    getQ1Q2Error()
-    # get_runtimes(cursor, noise=0)
-    # get_runtimes(cursor, noise=1)
+    get_runtimes(cursor, noise=0)
+    get_runtimes(cursor, noise=1)
 
-    # """ 
+    """ 
+    rawData1 = readFileGiveData("Q1vec.txt")
+    epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
+    print(epsilon1)
+    rawData2 = readFileGiveData("Q2vec.txt")
+    epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
+    print(epsilon2) 
+    """
+
+    # run to get runtime graphs
+    # read_runtime("runtime_q1noisy.txt", 1)
+    # read_runtime("runtime_q2noisy.txt", 2)
+    # read_runtime("runtime_q3noisy.txt", 3)
+    # read_runtime("runtime_q4noisy.txt", 4)
+    # read_runtime("runtime_q5noisy.txt", 5)
+
+
+    # run to get error graphs
+    # getQ1Q2Error()
+    # getQ345Error()
+
+    # run to look at best epsilon for Q1 and Q2
     # rawData1 = readFileGiveData("Q1vec.txt")
     # epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
     # print(epsilon1)
     # rawData2 = readFileGiveData("Q2vec.txt")
     # epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
-    # print(epsilon2) 
-    # """
-
-    read_runtime("runtime_q1noisy.txt", 1)
-    read_runtime("runtime_q2noisy.txt", 2)
-    read_runtime("runtime_q3noisy.txt", 3)
-    read_runtime("runtime_q4noisy.txt", 4)
-    read_runtime("runtime_q5noisy.txt", 5)
-
-
-    rawData1 = readFileGiveData("Q1vec.txt")
-    # epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
-    # print(epsilon1)
-    # makeSpreadPlot(rawData1)
-    # getQ1Q2Error()
-    rawData2 = readFileGiveData("Q2vec.txt")
-    # epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
     # print(epsilon2)
 
     #Closing the connection
-    # conn.close()
+    conn.close()
 
 if __name__=='__main__':
     main()
