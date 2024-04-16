@@ -4,12 +4,13 @@ This project shows attempts to study data on comsumer complaints about financial
 # Creating the database and running queries
 In order to run the code, a postgres database must be set up on the machine. 
 Steps:
-1) Download and install postgres.
-2) Create a database named "cc151"
-3) Use the following shell command to create the database:
+<ol>
+<li> Download and install postgres.
+<li> Create a database named "cc151"
+<li> Use the following shell command to create the database:
 CREATE DATABASE cc151
-4) Connect to the cc151 database
-5) Use the following command to create the 'complaints' table:
+<li> Connect to the cc151 database
+<li> Use the following command to create the 'complaints' table:
 
 CREATE TABLE complaints(
     date DATE NOT NULL, 
@@ -32,12 +33,12 @@ CREATE TABLE complaints(
     complaint_id SERIAL PRIMARY KEY
     )
 
-5) Use the following command to copy data into table, replacing X in the path with the directory where this repository is cloned:
+<li> Use the following command to copy data into table, replacing X in the path with the directory where this repository is cloned:
 
 \copy 'complaints' from 'X/CS 151 Term Project/database_priv/data/cleaned_data.csv' delimiter ' ' CSV HEADER;
 
-6) Run each of step A-D separately and in order, to see query results and runtime and error plots.
-
+<li> Run each of step A-D separately and in order, to see query results and runtime and error plots.
+</ol>
 
 # Here are the following SQL queries we intend to use:
 
