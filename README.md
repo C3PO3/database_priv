@@ -42,7 +42,7 @@ CREATE TABLE complaints(
 # Here are the following SQL queries we intend to use:
 
 ## Q1:
-###    Which company. subproduct pairs have >200 complaints.
+### Which company. subproduct pairs have >200 complaints.
 select * from (select company, product, count(*) ct
 from complaints
 group by company, product)
