@@ -86,18 +86,19 @@ where rat < 0.2 and state=' FL' \
 
 ## Q5: 
 ### Where can Texas consumers purchase credit reporting services?
+*
 with Z as (with X as (select distinct company, state, zip_code, count(*) ct from
 complaints  \
 where subproduct=' Credit reporting' \
 		  group by company, state, zip_code) \
 select X.company, X.state, X.zip_code, cast(X.ct as decimal)/cast(Y.ct as decimal) rat \
-from X, (select distinct company, state, zip_code, count(*) ct from \
+from X, (select distinct company, state, zip_code, count(\*) ct from \
 complaints group by company, state, zip_code)Y \
 where X.company=Y.company and X.state=Y.state and X.zip_code=Y.zip_code) \
 select company, state, zip_code, rat \
 from Z \
 where rat < 0.2 and state=' TX' \
-
+*
 # Privacy Preservation
 The queries run above reveal sensitive information about companies, like which of their products at which specific locations receive consumer complaints. \
 We use the Laplace Mechanism to make the query responses differentially private. \
