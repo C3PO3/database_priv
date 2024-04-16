@@ -32,7 +32,7 @@ CREATE TABLE complaints( \
     consumer_disputed VARCHAR(20) NOT NULL, \
     complaint_id SERIAL PRIMARY KEY \
     ) \
-\
+
 <li> Use the following command to copy data into table, replacing X in the path with the directory where this repository is cloned:
 
 \copy 'complaints' from 'X/CS 151 Term Project/database_priv/data/cleaned_data.csv' delimiter ' ' CSV HEADER;
