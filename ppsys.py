@@ -19,17 +19,19 @@ def laplace_mechanism(sensitivity, epsilon, data_size):
     noise = np.random.laplace(0, b, data_size)
     return noise
 
-def spread_plot(vecX, vecY, num):
+def spread_plot(vecX, vecY, qnum, num):
     plt.figure(figsize=(8, 6))  # Adjust figure size as needed
-    plt.scatter(vecX, vecY, color='b', label='Data Points')
+    #plt.scatter(vecX, vecY, color='b', label='Data Points')
+    plt.plot(vecX, vecY, '-o')
     plt.xlabel('Execution number')
     plt.ylabel('Average count')
     plt.title('Epsilon ' + str(num))
     plt.grid(True)
     plt.legend()
-    plt.show()
+    #plt.show()
+    plt.savefig("SpQ"+str(qnum)+"Eps"+str(num)+".png")
 
-def makeSpreadPlot(rawData):
+def makeSpreadPlot(rawData,qnum):
     epsilons = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
     executions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     yAxis = []
@@ -43,7 +45,7 @@ def makeSpreadPlot(rawData):
             avg /= len(noisyData)
             yAxis.append(avg)
             avg = 0
-        spread_plot(executions, yAxis, epsilon)
+        spread_plot(executions, yAxis, qnum, epsilon)
         yAxis = []
 
 def error_plot(vecX, vecY, num):
@@ -344,6 +346,11 @@ def main():
     # run to get error graphs
     """ getQ1Q2Error()
     getQ345Error() """
+    
+    # run to get plot of spread of query response values for each epsilon
+    for query_num in range(1,6):
+        rawData = readFileGiveData("Q"+str(query_num)+"vec.txt")
+        makeSpreadPlot(rawData, query_num)
 
     # run to look at best epsilon for Q1 and Q2
     """ rawData1 = readFileGiveData("Q1vec.txt")
