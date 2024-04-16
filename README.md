@@ -11,28 +11,28 @@ Steps:
 CREATE DATABASE cc151
 <li> Connect to the cc151 database
 <li> Use the following command to create the 'complaints' table:
-``
-CREATE TABLE complaints(
-    date DATE NOT NULL, 
-    product VARCHAR(75) NOT NULL,
-    subproduct VARCHAR(48) NOT NULL,
-    issue VARCHAR(81) NOT NULL,
-    subissue VARCHAR(141) NOT NULL,
-    complaint VARCHAR(32440) NOT NULL,
-    company_response_public VARCHAR(120) NOT NULL,
-    company VARCHAR(88) NOT NULL,
-    state VARCHAR(37) NOT NULL,
-    zip_code VARCHAR(10) NOT NULL,
-    tags VARCHAR(30) NOT NULL,
-    consent VARCHAR(28) NOT NULL,
-    submitted_via VARCHAR(15) NOT NULL,
-    date_sent VARCHAR(22) NOT NULL,
-    company_response_consumer VARCHAR(33) NOT NULL,
-    timely_reponse VARCHAR(18) NOT NULL,
-    consumer_disputed VARCHAR(20) NOT NULL,
-    complaint_id SERIAL PRIMARY KEY
-    )
-``
+
+CREATE TABLE complaints( \
+    date DATE NOT NULL, \
+    product VARCHAR(75) NOT NULL, \
+    subproduct VARCHAR(48) NOT NULL, \
+    issue VARCHAR(81) NOT NULL, \
+    subissue VARCHAR(141) NOT NULL, \
+    complaint VARCHAR(32440) NOT NULL, \
+    company_response_public VARCHAR(120) NOT NULL, \
+    company VARCHAR(88) NOT NULL, \
+    state VARCHAR(37) NOT NULL, \
+    zip_code VARCHAR(10) NOT NULL, \
+    tags VARCHAR(30) NOT NULL, \
+    consent VARCHAR(28) NOT NULL, \
+    submitted_via VARCHAR(15) NOT NULL, \
+    date_sent VARCHAR(22) NOT NULL, \
+    company_response_consumer VARCHAR(33) NOT NULL, \
+    timely_reponse VARCHAR(18) NOT NULL, \
+    consumer_disputed VARCHAR(20) NOT NULL, \
+    complaint_id SERIAL PRIMARY KEY \
+    ) \
+\
 <li> Use the following command to copy data into table, replacing X in the path with the directory where this repository is cloned:
 
 \copy 'complaints' from 'X/CS 151 Term Project/database_priv/data/cleaned_data.csv' delimiter ' ' CSV HEADER;
