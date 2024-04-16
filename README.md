@@ -68,7 +68,7 @@ from complaints group by company, state, zip_code)Y \
 where X.company=Y.company and X.state=Y.state and X.zip_code=Y.zip_code) \
 select company, state, zip_code, rat \
 from Z \
-where rat < 0.2 and state=' MA' \
+where rat < 0.2 and state=' MA'
 
 ## Q4: 
 ### Where can Florida consumers purchase credit reporting services?
@@ -82,7 +82,7 @@ complaints group by company, state, zip_code)Y \
 where X.company=Y.company and X.state=Y.state and X.zip_code=Y.zip_code) \
 select company, state, zip_code, rat \
 from Z \
-where rat < 0.2 and state=' FL' \
+where rat < 0.2 and state=' FL'
 
 ## Q5: 
 ### Where can Texas consumers purchase credit reporting services?
@@ -97,7 +97,7 @@ complaints group by company, state, zip_code)Y \
 where X.company=Y.company and X.state=Y.state and X.zip_code=Y.zip_code) \
 select company, state, zip_code, rat \
 from Z \
-where rat < 0.2 and state=' TX' \
+where rat < 0.2 and state=' TX'
 
 # Privacy Preservation
 The queries run above reveal sensitive information about companies, like which of their products at which specific locations receive consumer complaints. \
