@@ -19,7 +19,7 @@ def laplace_mechanism(sensitivity, epsilon, data_size):
     noise = np.random.laplace(0, b, data_size)
     return noise
 
-def spread_plot(vecX, vecY, qnum, num):
+def spread_plot(vecX, vecY, qnum, qnum, num):
     plt.figure(figsize=(8, 6))  # Adjust figure size as needed
     #plt.scatter(vecX, vecY, color='b', label='Data Points')
     plt.plot(vecX, vecY, '-o')
@@ -333,35 +333,42 @@ def main():
     # A.
     # run a given list of queries
     # runs all five queries of list of query numbers are not provided
-    """ get_query_outputs(cursor) """
+    """ """ get_query_outputs(cursor) """ """
     
     # B.
     # get run times with and without noise addition
     # do 10 trials for each query 
     # and for each epsilon in the case of noise addition
-    """ get_runtimes(cursor, noise=0)
-    get_runtimes(cursor, noise=1) """
-    # plot the runtimes
-    """ for query_num in range(1,6):
-        read_runtime("runtime_q"+str(query_num)+"noisy.txt", query_num) """
+    '''get_runtimes(cursor, noise=0)
+    get_runtimes(cursor, noise=1)'''
 
-    #Closing the connection
-    conn.close()
-
+   
     
-    # C. run to get error graphs
-    """ getQ1Q2Error()
-    getQ345Error() """
-    
-    # D. run to get plot of spread of query response values for each epsilon
-    for query_num in range(1,6):
-        rawData = readFileGiveData("Q"+str(query_num)+"vec.txt")
-        makeSpreadPlot(rawData, query_num)
+    getQ1Q2Error()
+    # get_runtimes(cursor, noise=0)
+    # get_runtimes(cursor, noise=1)
 
-    # run to look at best epsilon for Q1 and Q2
-    """ rawData1 = readFileGiveData("Q1vec.txt")
-    epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
-    print(epsilon1)
+    # """ 
+    # rawData1 = readFileGiveData("Q1vec.txt")
+    # epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
+    # print(epsilon1)
+    # rawData2 = readFileGiveData("Q2vec.txt")
+    # epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
+    # print(epsilon2) 
+    # """
+
+    read_runtime("runtime_q1noisy.txt", 1)
+    read_runtime("runtime_q2noisy.txt", 2)
+    read_runtime("runtime_q3noisy.txt", 3)
+    read_runtime("runtime_q4noisy.txt", 4)
+    read_runtime("runtime_q5noisy.txt", 5)
+
+
+    rawData1 = readFileGiveData("Q1vec.txt")
+    # epsilon1 = math.sqrt((2*1)/statistics.variance(rawData1))
+    # print(epsilon1)
+    # makeSpreadPlot(rawData1)
+    # getQ1Q2Error()
     rawData2 = readFileGiveData("Q2vec.txt")
     epsilon2 = math.sqrt((2*1)/statistics.variance(rawData2))
     print(epsilon2) """
