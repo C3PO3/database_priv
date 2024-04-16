@@ -29,7 +29,7 @@ def spread_plot(vecX, vecY, qnum, num):
     plt.grid(True)
     plt.legend()
     #plt.show()
-    plt.savefig("SpQ"+str(qnum)+"Eps"+str(num)+".png")
+    plt.savefig("SpreadPlots/SpQ"+str(qnum)+"Eps"+str(num)+".png")
 
 def makeSpreadPlot(rawData,qnum):
     epsilons = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
@@ -38,8 +38,14 @@ def makeSpreadPlot(rawData,qnum):
     avg = 0
     for epsilon in epsilons:
         for execution in executions:
-            noisyData = laplace_mechanism(1, epsilon, len(rawData)) + rawData
-            noisyData = [round(elem) for elem in noisyData]
+            noisyData = rawData + laplace_mechanism(1, epsilon, len(rawData)) + rawData
+            if qnum>2:
+                noisyData = [round(elem) for elem in noisyData]
+            else:
+                for i in range(len(noisyData)):
+                    while noisyData[i]>1:
+                        noisyData[i]=noisyData[i]/10
+                    
             for num in noisyData:
                 avg += num
             avg /= len(noisyData)
